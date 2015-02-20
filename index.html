@@ -1,0 +1,79 @@
+<html>
+<head>
+   <meta charset="UTF-8"> 
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+   <style>
+    #tooltip {
+      width: 300px;
+      background-color: #F8DE7E;
+      box-shadow: 10px 10px 5px #888888;
+      position: absolute;
+      opacity: 0.8;
+      top: 0px;
+      left: 0px;
+      visibility: collapse;
+    }
+    #tooltip h1 {
+      font-size: 15pt;
+    }
+   </style>
+   <script>
+    var svg = null;
+
+    function getSubDocument(embedding_element)
+    {
+      if (embedding_element.contentDocument) 
+      {
+        return embedding_element.contentDocument;
+      } 
+      else 
+      {
+        var subdoc = null;
+        try {
+          subdoc = embedding_element.getSVGDocument();
+        } catch(e) {}
+        return subdoc;
+      }
+    }
+
+    function hoverElement(event) {
+      var pos = svg.createSVGRect();
+      pos.x = event.clientX;
+      pos.y = event.clientY;
+      pos.width = pos.height = 1;
+
+      var list = svg.getIntersectionList(pos, null);
+      var isHit = false;
+
+      for (var i = 0; i < list.length; ++i) {
+        if (list[i].id == "text4383") {
+          $('#tooltip').css({
+          "visibility":  "visible",
+          "top": event.clientY,
+          "left": event.clientX + 20});
+          isHit = true;
+        }
+      }
+
+      if (!isHit) {
+        $('#tooltip').css("visibility", "collapse");
+      }
+    }
+
+    window.onload = function() {
+      svg = getSubDocument(document.getElementById('system-diagram')).documentElement;
+          svg.removeAttribute("width");
+          svg.removeAttribute("height");
+          svg.setAttribute("viewBox", "0 0 3200 2400");
+          svg.addEventListener("mousemove", hoverElement, false);
+        };
+   </script>
+</head>
+<body>
+    <div id ="tooltip">
+      <h1>Gallifrey</h1>
+      Asks vidispine things
+    </div>
+    <object id="system-diagram" data="cdm_gig_diagram.svg" type="image/svg+xml" /> 
+</body>
+</html>
