@@ -36,36 +36,24 @@
       }
     }
 
-    function hoverElement(event) {
-      var pos = svg.createSVGRect();
-      pos.x = event.clientX;
-      pos.y = event.clientY;
-      pos.width = pos.height = 1;
-
-      var list = svg.getIntersectionList(pos, null);
-      var isHit = false;
-
-      for (var i = 0; i < list.length; ++i) {
-        if (list[i].id == "text4383") {
-          $('#tooltip').css({
-          "visibility":  "visible",
-          "top": event.clientY,
-          "left": event.clientX + 20});
-          isHit = true;
-        }
-      }
-
-      if (!isHit) {
-        $('#tooltip').css("visibility", "collapse");
-      }
-    }
-
     window.onload = function() {
       svg = getSubDocument(document.getElementById('system-diagram')).documentElement;
           svg.removeAttribute("width");
           svg.removeAttribute("height");
           svg.setAttribute("viewBox", "0 0 3200 2400");
-          svg.addEventListener("mousemove", hoverElement, false);
+          svg.getElementById("text4383").onmouseenter = function (event) {
+            $('#tooltip').css({
+            "visibility":  "visible"});
+          };
+          svg.getElementById("text4383").onmousemove = function (event) {
+            $('#tooltip').css({
+            "top": event.clientY,
+            "left": event.clientX + 20});
+          };
+          svg.getElementById("text4383").onmouseleave = function (event) {
+            $('#tooltip').css({
+            "visibility":  "collapse"});
+          };
         };
    </script>
 </head>
