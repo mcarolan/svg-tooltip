@@ -2,13 +2,14 @@
 <head>
    <meta charset="UTF-8"> 
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+   <script src="system-diagram-tooltip.js"></script>
    <style>
     #tooltip {
-      width: 300px;
+      min-width: 300px;
       background-color: #F8DE7E;
       box-shadow: 10px 10px 5px #888888;
       position: absolute;
-      opacity: 0.8;
+      opacity: 0.9;
       top: 0px;
       left: 0px;
       visibility: collapse;
@@ -18,50 +19,11 @@
     }
    </style>
    <script>
-    var svg = null;
-
-    function getSubDocument(embedding_element)
-    {
-      if (embedding_element.contentDocument) 
-      {
-        return embedding_element.contentDocument;
-      } 
-      else 
-      {
-        var subdoc = null;
-        try {
-          subdoc = embedding_element.getSVGDocument();
-        } catch(e) {}
-        return subdoc;
-      }
-    }
-
-    window.onload = function() {
-      svg = getSubDocument(document.getElementById('system-diagram')).documentElement;
-          svg.removeAttribute("width");
-          svg.removeAttribute("height");
-          svg.setAttribute("viewBox", "0 0 3200 2400");
-          svg.getElementById("text4383").onmouseenter = function (event) {
-            $('#tooltip').css({
-            "visibility":  "visible"});
-          };
-          svg.getElementById("text4383").onmousemove = function (event) {
-            $('#tooltip').css({
-            "top": event.clientY,
-            "left": event.clientX + 20});
-          };
-          svg.getElementById("text4383").onmouseleave = function (event) {
-            $('#tooltip').css({
-            "visibility":  "collapse"});
-          };
-        };
+    
    </script>
 </head>
 <body>
-    <div id ="tooltip">
-      <h1>Gallifrey</h1>
-      Asks vidispine things
-    </div>
+    <div id="tooltip"></div>
     <object id="system-diagram" data="cdm_gig_diagram.svg" type="image/svg+xml" /> 
 </body>
 </html>
